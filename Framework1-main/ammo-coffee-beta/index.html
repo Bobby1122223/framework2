@@ -36,7 +36,7 @@
     ></script>
 
     <!--Apps-->
-    <script src="js/apps.js"></script>
+    <script src="js/apps.js" async></script>
   </head>
 
   <body>
@@ -67,21 +67,22 @@
           <!--nambahin menu di keranjang-->
           <img :src="`img/products/${item.img}`" alt="item.name" />
           <div class="item-detail">
-            <h3 x-text="rupiah(item.name)"></h3>
+            <h3 x-text="item.name"></h3>
             <div class="item-price">
               <span x-text="rupiah(item.price)"></span> &times;
-              <button id="remove">&minus;</button>
+              <button id="remove" @click="$store.cart.remove(item.id)">&minus;</button>
               <span x-text="item.quantity"></span>
-              <button id="add">&plus;</button> &equals;
-              <span x-text="item.total"></span>
+              <button id="add" @click="$store.cart.add(item)">&plus;</button> &equals;
+              <span x-text="rupiah(item.total)"></span>
             </div>
           </div>
         </div>
       </template>
+      <h4 x-show="$store.cart.items.length">Total :<span x-text="rupiah($store.cart.total)"></span></h4>
       </div>
       <!-- shopping end-->
 
-    </nav>
+    </nav> 
     <!-- navbar end -->
 
     <!-- hero section start-->
@@ -100,7 +101,7 @@
 
       <div class="row">
         <div class="about-image">
-          <img src="/ammo-coffee-beta/img/tentang kami.jpg" alt="tentang kami" />
+          <img src="/Framework1-main/ammo-coffee-beta/img/tentang kami.jpg" alt="tentang kami" />
         </div>
         <div class="content">
           <h3>Kenapa memilih kopi kami ?</h3>
@@ -145,9 +146,9 @@
                     <span x-text="rupiah(item.price)"></span>
                   </div>
                   <div class="card-text">
-                    <p x-text="item.description">ppks</p>
+                    <p x-text="item.description"></p>
                   </div>
-                  <a href="#" class="btn mr-2"  @click.prevent="$store.cart.add(item)">Pesan Sekarang</a>
+                  <a href="#" class="btn mr-2" @click.prevent="$store.cart.add(item)">Pesan Sekarang</a>
                 </div>
               </div>
             </div>

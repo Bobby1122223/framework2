@@ -3,8 +3,8 @@ document.addEventListener("alpine:init", () => {
     items: [
       {
         id: 1,
-        name: "Americano",
-        description: "lorem sahbdhbfkhbakdb jdahsbahbdha adbkhadbjkjak",
+        name: 'Americano',
+        description: 'lorem sahbdhbfkhbakdb jdahsbahbdha adbkhadbjkjak',
         img: "1.jpg.jpg",
         price: 20000,
       },
@@ -88,36 +88,64 @@ document.addEventListener("alpine:init", () => {
     ],
   }));
 
-  Alpine.store("cart", {
+  Alpine.store(`cart`, {
     items: [],
     total: 0,
     quantity: 0,
-    add(newitem) {
+    add(newItem) {
       //cek barang
-      const cartitem = this.item.find((item) => item.id === newitem.id);
+      const cartItem = this.items.find((item) => item.id === newItem.id);
 
       //cek cart kosong
-      if (!cartitem) {
-        this.items.push({ ...newitem, quantity: 1, total: newitem.price });
-        this.quality++;
-        this.total += newitem.price;
+      if (!cartItem) {
+        this.items.push({ ...newItem, quantity: 1, total: newItem.price });
+        this.quantity++;
+        this.total += newItem.price;
       } else {
         //jika barang sudah ada
         this.items = this.items.map((item) => {
           //jika barang berbeda di dalam cart
-          if (item.id !== newitem.id) {
+          if (item.id !== newItem.id) {
             return item;
           } else {
             //jika barang sudah ada , tambah quantity dan totalnya
             item.quantity++;
             item.total = item.price * item.quantity;
-            this.quality++;
+            this.quantity++;
             this.total += item.price;
             return item;
           }
         });
       }
     },
+remove(id) {
+  // ambil item yang mau di remove berdasarkan id nya
+  const cartItem = this.items.find((item) => item.id === id);
+
+  //jika lebih dari 1
+  if(cartItem.quantity > 1) {
+    // telusuri 1 1
+    this.items = this.items.map((item) => {
+      //jika bukan barang yang di klik
+      if(item.id !== id) {
+        return item;
+      } else {
+        item.quantity--;
+        item.total = item.price * item.quantity;
+        this.quantity--;
+        this.total -= item.price;
+        return item;
+
+      }
+    })
+  } else if (cartItem.quantity === 1) {
+    // jka barangnya sisa 1
+    this.items = this.items.filter((item) => item.id !== id);
+    this.quantity--;
+    this.total -= cartItem.price;
+
+  }
+},
   });
 });
 
