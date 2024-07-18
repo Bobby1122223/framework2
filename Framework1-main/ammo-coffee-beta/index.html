@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ammo Coffee</title>
+
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- feather icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <!--font awesome-->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!--customized bootstrap stylesheet-->
+    <link
+      href="css/bootstrap-4.5.0-dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!--Alpine.js-->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+
+    <!--Apps-->
+    <script src="js/apps.js"></script>
+  </head>
+
+  <body>
+    <!-- navbar start -->
+    <nav class="navbar" x-data>
+      <a href="#" class="navbar-logo">Ammo<span>Coffee</span>.</a>
+
+      <div class="navbar-nav">
+        <a href="#home">Home</a>
+        <a href="#about">Tentang Kami</a>
+        <a href="#menu">Menu</a>
+        <a href="#contact">Kontak</a>
+      </div>
+
+      <div class="navbar-extra">
+        <a href="#" id="shopping-cart-button"
+          ><i data-feather="shopping-cart"></i>
+          <span class="quantity-badge" x-show="$store.cart.quantity" x-text="$store.cart.quantity"></span>
+        </a>
+        <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
+      </div>
+
+      <!-- shopping cart-->
+      <div class="shopping-cart">
+        <template x-for="(item, index) in $store.cart.items" x-keys="index">
+        <div class="cart-item">
+
+          <!--nambahin menu di keranjang-->
+          <img :src="`img/products/${item.img}`" alt="item.name" />
+          <div class="item-detail">
+            <h3 x-text="rupiah(item.name)"></h3>
+            <div class="item-price">
+              <span x-text="rupiah(item.price)"></span> &times;
+              <button id="remove">&minus;</button>
+              <span x-text="item.quantity"></span>
+              <button id="add">&plus;</button> &equals;
+              <span x-text="item.total"></span>
+            </div>
+          </div>
+        </div>
+      </template>
+      </div>
+      <!-- shopping end-->
+
+    </nav>
+    <!-- navbar end -->
+
+    <!-- hero section start-->
+    <section class="hero" id="home">
+      <main class="content">
+        <h1>Mari Nikmati Secangkir <span>Kopi</span></h1>
+        <p>Nikmati secangkir kopi panas dengan biji kopi pilihan terbaik.</p>
+      </main>
+    </section>
+
+    <!-- hero section end -->
+
+    <!-- about section start -->
+    <section id="about" class="about">
+      <h2><span>Tentang</span> Kami</h2>
+
+      <div class="row">
+        <div class="about-image">
+          <img src="/ammo-coffee-beta/img/tentang kami.jpg" alt="tentang kami" />
+        </div>
+        <div class="content">
+          <h3>Kenapa memilih kopi kami ?</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab enim et
+            reiciendis iusto, quae esse sint distinctio assumenda eaque
+            consequuntur!
+          </p>
+          <p>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Id,
+            tempora repellendus. Doloremque nostrum, iure quisquam porro in
+            blanditiis consectetur quasi?
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- about section end -->
+
+    <!-- menu sections start -->
+
+    <section id="menu" class="menu" x-data="menu">
+      <h2><span>Menu</span> Kami</h2>
+      <p>Kami menyediakan berbagai coffee dan non coffee</p>
+
+      <section id="coffee" class="coffee">
+        <h1><span>VARIANT </span>COFFEE</h1>
+      </section>
+
+      <!---menu 1-->
+
+      <div class="container mx-auto mt-4">
+        <div class="row">
+          <template x-for="(item,index) in items" x-key="index">
+            <div class="col-md-4">
+              <div class="card" style="width: 18rem">
+                <img :src="`img/products/${item.img}`" class="card-img-top" />
+                <div class="card-body">
+                  <div class="card-title" x-text="item.name"></div>
+                  <!--nama menu-->
+                  <div class="card-subtitle mb-2 text-muted">
+                    <span x-text="rupiah(item.price)"></span>
+                  </div>
+                  <div class="card-text">
+                    <p x-text="item.description">ppks</p>
+                  </div>
+                  <a href="#" class="btn mr-2"  @click.prevent="$store.cart.add(item)">Pesan Sekarang</a>
+                </div>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+    <!-- menu sections end-->
+
+    <!-- contak section start-->
+    <section id="contact" class="contact">
+      <h2><span>Reser</span>vasi</h2>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni,
+        doloribus?
+      </p>
+
+      <div class="row">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.553536885134!2d107.30187427387841!3d-6.322220361862521!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6977635ee9ca9d%3A0x834e99624630f13f!2sAmmo%20Coffee!5e0!3m2!1sid!2sid!4v1716807066441!5m2!1sid!2sid"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          class="map"
+        ></iframe>
+
+        <form action="">
+          <div class="input-group">
+            <i data-feather="user"></i>
+            <input type="text" placeholder="Nama" />
+          </div>
+          <div class="input-group">
+            <i data-feather="calendar"></i>
+            <input type="text" placeholder="Tanggal Reservasi" />
+          </div>
+          <div class="input-group">
+            <i data-feather="phone"></i>
+            <input type="text" placeholder="No WhatsApp" />
+          </div>
+
+          <button type="submit" class="btn">booking</button>
+        </form>
+      </div>
+    </section>
+    <!-- contak section end -->
+
+    <!-- footer strat -->
+    <footer>
+      <div class="social">
+        <a href="#"><i data-feather="instagram"></i></a>
+        <a href="#"><i data-feather="twitter"></i></a>
+        <a href="#"><i data-feather="facebook"></i></a>
+
+        <div class="link">
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#menu">Menu</a>
+          <a href="#contact">Kontak</a>
+        </div>
+
+        <div class="credit">
+          <p>Created by <a href="">Muhammad Fadil</a>. &copy;2024</p>
+        </div>
+      </div>
+    </footer>
+    <!-- footer end -->
+
+    <!-- feather icons -->
+    <script>
+      feather.replace();
+    </script>
+
+    <!-- My javascript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>
